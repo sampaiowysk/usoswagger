@@ -1,0 +1,152 @@
+swagger: '2.0'
+info:
+  description: |
+    This is a sample Petstore server.  You can find 
+    out more about Swagger at 
+    [http://swagger.io](http://swagger.io) or on 
+    [irc.freenode.net, #swagger](http://swagger.io/irc/).
+  version: 1.0.0
+  title: Swagger Library
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+paths:
+  /lib:
+    post:
+      summary: Create a new library
+      operationId: createNewLib
+      responses:
+        200:
+          description: Biblioteca Criada
+          schema:
+            type: object
+            properties:
+              bookName:
+                type: string
+                example: "How to kill a mocking bird"
+      security:
+        - library_auth:
+            - write:books
+            - read:books
+    get:
+      summary: Print Library
+      description: Print the library
+      operationId: printLib
+      responses:
+        200:
+          description: Biblioteca Impressa
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                bookName:
+                  type: string
+                  example: "How to kill a mocking bird"
+
+      security:
+        - library_auth:
+            - write:books
+            - read:books
+  /book:
+    post:
+      summary: Add Book
+      description: Add a Book
+      operationId: addBook
+      parameters:
+        - in: body
+          name: body
+          description: Book object
+          required: true
+          schema:
+            $ref: '#/definitions/Book'
+      responses:
+        200:
+          description: Livro Adicionado
+          schema:
+            type: object
+            properties:
+              bookName:
+                type: string
+                example: "How to kill a mocking bird"
+        400:
+          description: Invalid ID supplied
+      security:
+        - library_auth:
+            - write:books
+            - read:books
+    get:
+      summary: Find Book
+      description: Find a Book
+      operationId: findBook
+      parameters:
+        - name: bookId
+          in: path
+          description: ID of book to find
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: Busca Feita, retorna o nome do livro
+          schema:
+            type: object
+            properties:
+              bookName:
+                type: string
+                example: "How to kill a mocking bird"
+
+      security:
+        - library_auth:
+            - write:books
+            - read:books
+securityDefinitions:
+  library_auth:
+    type: oauth2
+    authorizationUrl: http://library.swagger.io/oauth/dialog
+    flow: implicit
+    scopes:
+      write:books: books in our account
+      read:books: read your books
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+definitions:
+  Book:
+    type: object
+    required:
+      - id
+      - title
+      - author
+      - desc
+    properties:
+      id:
+        type: integer
+        format: int64
+      title:
+        type: string
+        example: doggie
+      author:
+        type: string
+        example: JK
+      desc:
+        type: string
+        example: nada
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /dtidigital/biblioteca/1.0.0
+# schemes:
+#  - http
+#  - https
+# Added by API Auto Mocking Plugin
+schemes:
+  - https
+  - http
