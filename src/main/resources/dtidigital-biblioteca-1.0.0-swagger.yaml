@@ -79,6 +79,7 @@ paths:
         - library_auth:
             - write:books
             - read:books
+  /book/{bookId}:
     get:
       summary: Find Book
       description: Find a Book
