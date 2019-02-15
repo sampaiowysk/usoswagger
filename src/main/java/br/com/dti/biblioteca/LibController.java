@@ -27,7 +27,6 @@ public class LibController implements LibApi, BookApi {
     public ResponseEntity<InlineResponse200> createNewLib() {
         try {
             bib = new Lib();
-            System.out.println("OI");
             InlineResponse200 resposta = new InlineResponse200();
             resposta.setBookName("Biblioteca Criada");
             return new ResponseEntity<InlineResponse200>(resposta, HttpStatus.OK);

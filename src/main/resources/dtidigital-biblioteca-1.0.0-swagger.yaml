@@ -61,7 +61,7 @@ paths:
         - in: body
           name: body
           description: Book object
-          required: true
+          required: false
           schema:
             $ref: '#/definitions/Book'
       responses:

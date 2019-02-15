@@ -4,7 +4,7 @@ import br.com.dti.biblioteca.models.Book;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lib implements LibRepository {
+public class Lib {
     List<Book> biblioteca;
     private static long id;
 
