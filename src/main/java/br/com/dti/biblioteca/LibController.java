@@ -5,11 +5,8 @@ import br.com.dti.biblioteca.models.InlineResponse200;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import br.com.dti.biblioteca.controllers.LibApi;
 import br.com.dti.biblioteca.controllers.BookApi;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
