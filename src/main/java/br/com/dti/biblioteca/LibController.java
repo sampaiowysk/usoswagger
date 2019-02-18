@@ -1,12 +1,11 @@
 package br.com.dti.biblioteca;
 
+import br.com.dti.biblioteca.controllers.BookApi;
+import br.com.dti.biblioteca.controllers.LibApi;
 import br.com.dti.biblioteca.models.Book;
-import br.com.dti.biblioteca.models.InlineResponse200;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import br.com.dti.biblioteca.controllers.LibApi;
-import br.com.dti.biblioteca.controllers.BookApi;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,7 @@ import java.util.Optional;
 @RestController
 public class LibController implements LibApi, BookApi {
 
-    private Lib bib;
+    Lib bib;
 
     @Override
     public ResponseEntity<String> createNewLib() {
@@ -39,47 +38,36 @@ public class LibController implements LibApi, BookApi {
     public ResponseEntity<List<String>> printLib() {
         try {
             List<String> livros = bib.imprimeLivros();
-            InlineResponse200 resposta = new InlineResponse200();
-            List<InlineResponse200> retorno = new ArrayList<InlineResponse200>();
-            for(String livro: livros) {
-                resposta.setBookName(livro);
-                retorno.add(resposta);
-            }
-            return new ResponseEntity<List<InlineResponse200>>(retorno, HttpStatus.OK);
+            return new ResponseEntity<>(livros, HttpStatus.OK);
         }catch(Exception e) {
-            InlineResponse200 resposta = new InlineResponse200();
-            resposta.setBookName(e.getMessage());
-            List<InlineResponse200> retorno = new ArrayList<InlineResponse200>();
+            String resposta =e.getMessage();
+            List<String> retorno = new ArrayList<>();
             retorno.add(resposta);
-            return new ResponseEntity<List<InlineResponse200>>(retorno,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(retorno, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public ResponseEntity<InlineResponse200> addBook(@Valid Book body) {
+    public ResponseEntity<String> addBook(@Valid Book body) {
         try {
             Book livro = bib.addLivro(body.getTitle(), body.getAuthor(), body.getDesc());
-            InlineResponse200 resposta = new InlineResponse200();
-            resposta.setBookName("Livro Criado: ID - " + livro.getId());
-            return new ResponseEntity<InlineResponse200>(resposta, HttpStatus.OK);
+            String resposta ="Livro Criado: ID - " + livro.getId();
+            return new ResponseEntity<>(resposta, HttpStatus.OK);
         }catch(Exception e) {
-            InlineResponse200 resposta = new InlineResponse200();
-            resposta.setBookName(e.getMessage());
-            return new ResponseEntity<InlineResponse200>(resposta, HttpStatus.INTERNAL_SERVER_ERROR);
+            String resposta = e.getMessage();
+            return new ResponseEntity<>(resposta, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public ResponseEntity<InlineResponse200> findBook(Long bookId) {
+    public ResponseEntity<String> findBook(Long bookId) {
         try {
             Book livro = bib.findLivro(bookId);
-            InlineResponse200 resposta = new InlineResponse200();
-            resposta.setBookName("Busca (ID: "+livro.getId()+") Livro: " + livro.getTitle());
-            return new ResponseEntity<InlineResponse200>(resposta, HttpStatus.OK);
+            String resposta = "Busca (ID: "+livro.getId()+") Livro: " + livro.getTitle();
+            return new ResponseEntity<>(resposta, HttpStatus.OK);
         }catch(Exception e) {
-            InlineResponse200 resposta = new InlineResponse200();
-            resposta.setBookName(e.getMessage());
-            return new ResponseEntity<InlineResponse200>(resposta,HttpStatus.INTERNAL_SERVER_ERROR);
+            String resposta = e.getMessage();
+            return new ResponseEntity<>(resposta, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
