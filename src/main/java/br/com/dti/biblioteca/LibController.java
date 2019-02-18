@@ -18,24 +18,25 @@ import java.util.Optional;
 @RestController
 public class LibController implements LibApi, BookApi {
 
-    Lib bib;
+    private Lib bib;
 
     @Override
-    public ResponseEntity<InlineResponse200> createNewLib() {
+    public ResponseEntity<String> createNewLib() {
+        String resposta;
+        HttpStatus responseCode;
         try {
             bib = new Lib();
-            InlineResponse200 resposta = new InlineResponse200();
-            resposta.setBookName("Biblioteca Criada");
-            return new ResponseEntity<InlineResponse200>(resposta, HttpStatus.OK);
+            resposta = "Biblioteca Criada";
+            responseCode = HttpStatus.OK;
         }catch(Exception e) {
-            InlineResponse200 resposta = new InlineResponse200();
-            resposta.setBookName(e.getMessage());
-            return new ResponseEntity<InlineResponse200>(resposta,HttpStatus.INTERNAL_SERVER_ERROR);
+            resposta = e.getMessage();
+            responseCode = HttpStatus.INTERNAL_SERVER_ERROR;
         }
+        return new ResponseEntity<>(resposta, responseCode);
     }
 
     @Override
-    public ResponseEntity<List<InlineResponse200>> printLib() {
+    public ResponseEntity<List<String>> printLib() {
         try {
             List<String> livros = bib.imprimeLivros();
             InlineResponse200 resposta = new InlineResponse200();

@@ -23,11 +23,7 @@ paths:
         200:
           description: Biblioteca Criada
           schema:
-            type: object
-            properties:
-              bookName:
-                type: string
-                example: "How to kill a mocking bird"
+            $ref: '#/definitions/StringResponse'
       security:
         - library_auth:
             - write:books
@@ -42,11 +38,7 @@ paths:
           schema:
             type: array
             items:
-              type: object
-              properties:
-                bookName:
-                  type: string
-                  example: "How to kill a mocking bird"
+              $ref: '#/definitions/StringResponse'
 
       security:
         - library_auth:
@@ -68,11 +60,7 @@ paths:
         200:
           description: Livro Adicionado
           schema:
-            type: object
-            properties:
-              bookName:
-                type: string
-                example: "How to kill a mocking bird"
+            $ref: '#/definitions/StringResponse'
         400:
           description: Invalid ID supplied
       security:
@@ -95,11 +83,7 @@ paths:
         200:
           description: Busca Feita, retorna o nome do livro
           schema:
-            type: object
-            properties:
-              bookName:
-                type: string
-                example: "How to kill a mocking bird"
+            $ref: '#/definitions/StringResponse'
 
       security:
         - library_auth:
@@ -118,10 +102,14 @@ securityDefinitions:
     name: api_key
     in: header
 definitions:
+
+  StringResponse:
+    type: string
+
+
   Book:
     type: object
     required:
-      - id
       - title
       - author
       - desc
