@@ -106,7 +106,6 @@ definitions:
   StringResponse:
     type: string
 
-
   Book:
     type: object
     required:

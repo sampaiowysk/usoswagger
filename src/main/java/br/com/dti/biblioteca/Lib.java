@@ -16,7 +16,7 @@ public class Lib {
         Catalogo.setDesc("Testejava");
         Catalogo.setId(id);
         Catalogo.setTitle("Catalogo");
-        biblioteca = new ArrayList<Book>();
+        biblioteca = new ArrayList<>();
         biblioteca.add(Catalogo);
         id++;
     }
@@ -47,7 +47,7 @@ public class Lib {
     }
 
     public List<String> imprimeLivros() {
-        List<String> livros = new ArrayList<String>();
+        List<String> livros = new ArrayList<>();
         for(Book livro: biblioteca) {
             livros.add("ID: "+livro.getId()+"; Titulo: "+livro.getTitle()+"; Autor: "+livro.getAuthor()+";");
         }

@@ -92,7 +92,7 @@
 							<configuration>
 								<inputSpec>${project.basedir}/src/main/resources/dtidigital-biblioteca-1.0.0-swagger.yaml</inputSpec>
 								<language>spring</language>
-								<addCompileSourceRoot>false</addCompileSourceRoot>
+								<addCompileSourceRoot>true</addCompileSourceRoot>
 								<generateApis>true</generateApis>
 								<generateSupportingFiles>false</generateSupportingFiles>
 								<configOptions>

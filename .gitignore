@@ -55,3 +55,6 @@ hs_err_pid*
 *.iml
 out
 gen
+/.idea/
+/target/
+/usoswagger.iml
