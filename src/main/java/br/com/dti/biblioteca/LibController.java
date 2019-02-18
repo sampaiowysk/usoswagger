@@ -17,7 +17,7 @@ import java.util.Optional;
 @RestController
 public class LibController implements LibApi, BookApi {
 
-    Lib bib;
+    private Lib bib;
 
     @Override
     public ResponseEntity<String> createNewLib() {
@@ -36,39 +36,47 @@ public class LibController implements LibApi, BookApi {
 
     @Override
     public ResponseEntity<List<String>> printLib() {
+        List<String> resposta;
+        HttpStatus responseCode;
         try {
-            List<String> livros = bib.imprimeLivros();
-            return new ResponseEntity<>(livros, HttpStatus.OK);
+            resposta = bib.imprimeLivros();
+            responseCode = HttpStatus.OK;
         }catch(Exception e) {
-            String resposta =e.getMessage();
-            List<String> retorno = new ArrayList<>();
-            retorno.add(resposta);
-            return new ResponseEntity<>(retorno, HttpStatus.INTERNAL_SERVER_ERROR);
+            resposta = new ArrayList<>();
+            resposta.add(e.getMessage());
+            responseCode = HttpStatus.INTERNAL_SERVER_ERROR;
         }
+        return new ResponseEntity<>(resposta, responseCode);
     }
 
     @Override
     public ResponseEntity<String> addBook(@Valid Book body) {
+        String resposta;
+        HttpStatus responseCode;
         try {
             Book livro = bib.addLivro(body.getTitle(), body.getAuthor(), body.getDesc());
-            String resposta ="Livro Criado: ID - " + livro.getId();
-            return new ResponseEntity<>(resposta, HttpStatus.OK);
+            resposta = "Livro Criado: ID - " + livro.getId();
+            responseCode = HttpStatus.OK;
         }catch(Exception e) {
-            String resposta = e.getMessage();
-            return new ResponseEntity<>(resposta, HttpStatus.INTERNAL_SERVER_ERROR);
+            resposta = e.getMessage();
+            responseCode = HttpStatus.INTERNAL_SERVER_ERROR;
         }
+        return new ResponseEntity<>(resposta, responseCode);
     }
 
     @Override
     public ResponseEntity<String> findBook(Long bookId) {
+        String resposta;
+        HttpStatus responseCode;
         try {
             Book livro = bib.findLivro(bookId);
-            String resposta = "Busca (ID: "+livro.getId()+") Livro: " + livro.getTitle();
-            return new ResponseEntity<>(resposta, HttpStatus.OK);
+            resposta = "Busca (ID: " + livro.getId() + ") Livro: " + livro.getTitle();
+            responseCode = HttpStatus.OK;
         }catch(Exception e) {
-            String resposta = e.getMessage();
-            return new ResponseEntity<>(resposta, HttpStatus.INTERNAL_SERVER_ERROR);
+            resposta = e.getMessage();
+            responseCode = HttpStatus.INTERNAL_SERVER_ERROR;
         }
+        return new ResponseEntity<>(resposta, responseCode);
     }
 
     @Override
